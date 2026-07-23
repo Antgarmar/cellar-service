@@ -1,0 +1,44 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: cellar-service
+
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/cellar_db}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+
+  data:
+    redis:
+      url: ${REDIS_URL:redis://localhost:6379}
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+wine:
+  service:
+    url: ${WINE_SERVICE_URL:http://wine-service}
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
+  instance:
+    prefer-ip-address: true
+
+logging:
+  level:
+    tu.somelier.cellar: INFO
